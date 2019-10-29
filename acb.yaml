@@ -1,0 +1,17 @@
+version: v1.1.0
+stepTimeout: 3000
+steps:
+  - id: base
+    build: -t jbn base-notebook/
+  - id: min
+    build: -t jmn minimal-notebook/
+  - id: scipy
+    build: -t jsn scipy-notebook/
+  - id: pyspark
+    build: -t jpn minimal-notebook/
+  - id: allspark
+    build: -t $Registry/custom-all-spark-notebook all-spark-notebook/
+    push:
+      - $Registry/custom-all-spark-notebook
+  - id: test
+    cmd: $Registry/custom-all-spark-notebook

@@ -147,5 +147,12 @@ else
     # Execute the command
     run-hooks /usr/local/bin/before-notebook.d
     echo "Executing the command: ${cmd[@]}"
-    exec "${cmd[@]}"
+    exec "${cmd[@]}" &
+    ps aux | grep "notebook"
+    until $(curl --output /dev/null -sSL http://localhost:8888); do
+        echo ".."
+        sleep 0.5s
+    done
+    echo "successfully pinged the notebook at http://127.0.0.1:8888......"
+    echo "done"
 fi
